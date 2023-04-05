@@ -6,6 +6,8 @@
  */
 #include "GPIO.h"
 
+static gpio_call_back_t s_gpio_callback;
+
 void GPIO_config(void)
 {
 	 gpio_pin_config_t sw_config = {
@@ -34,19 +36,46 @@ void GPIO_config(void)
 		                                                      /* Pin Control Register fields [15:0] are not locked */
 		                                                      kPORT_UnlockRegister};
 		CLOCK_EnableClock(kCLOCK_PortA);
-		CLOCK_EnableClock(kCLOCK_PortB);
+//		CLOCK_EnableClock(kCLOCK_PortB);
 		CLOCK_EnableClock(kCLOCK_PortC);
 
 
+		// Config SW2 PTA4
+		PORT_SetPinConfig(PORTA, bit_4, &porta4_pin38_config);
+		GPIO_PinInit(GPIOA, bit_4, &sw_config);
+		PORT_SetPinInterruptConfig(PORTA, bit_6, kPORT_DMAFallingEdge);
+		// Config SW3 PTC 6
 		PORT_SetPinConfig(PORTC, bit_6, &porta4_pin38_config);
 		GPIO_PinInit(GPIOC, bit_6, &sw_config);
-
-
-
 		PORT_SetPinInterruptConfig(PORTC, bit_6, kPORT_DMAFallingEdge);
+
+		// LED
 		PORT_SetPinMux(PORTB, bit_22, kPORT_MuxAsGpio);
-
-
 		   /* Init output LED GPIO. */
 		GPIO_PinInit(GPIOB, bit_22, &led_config);
+
+		NVIC_EnableIRQ(IRQHandler_portC_portA);
+}
+
+void GPIO_callbck(gpio_call_back_t callback ){
+	s_gpio_callback = callback;
+
+}
+
+void IRQHandler_portC_portA(void){
+	uint32_t triggered_pin = 0;
+
+	if(PORT_GetPinsInterruptFlags(PORTA)& (1U << 4U)){
+		PORT_ClearPinsInterruptFlags(PORTA, 1U<<4U);
+		triggered_pin =4;
+	}
+
+	if(PORT_GetPinsInterruptFlags(PORTC)& (bit_1<<bit_6)){
+		PORT_ClearPinsInterruptFlags(PORTC, bit_1<<bit_6);
+		triggered_pin = 6;
+	}
+	if(s_gpio_callback && triggered_pin){
+		s_gpio_callback(triggered_pin);
+	}
+
 }
