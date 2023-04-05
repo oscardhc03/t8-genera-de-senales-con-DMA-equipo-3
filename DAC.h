@@ -8,6 +8,11 @@
 #ifndef DAC_H_
 #define DAC_H_
 
+#include "fsl_dac.h"
+
+
+void DAC_init(void);
+void DAC_Set(uint32_t val);
 
 
 #endif /* DAC_H_ */

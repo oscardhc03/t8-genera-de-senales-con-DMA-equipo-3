@@ -16,7 +16,7 @@ typedef void (*gpio_call_back_t)(void);
 
 void GPIO_config(void);
 void GPIO_callbck(gpio_call_back_t callback );
-void IRQHandler_portC(void);
+void IRQHandler_portC_portA(void);
 
 
 #endif /* GPIO_H_ */
