@@ -10,6 +10,7 @@
 
 #include "fsl_pit.h"
 #include "NVIC.h"
+#include "GPIO.h"
 
 static void PIT0_IRQHandler(void);
 

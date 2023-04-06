@@ -28,3 +28,8 @@ void DAC_Set(uint32_t val){
 	DAC_SetBufferValue(base, 0U, val);
 }
 
+void DAC_Set_signal(signal_type_t signal_type, uint32_t frequency){
+	uint16_t *signal_buffer = Signals_GetActiveSignalBuffer();
+	uint32_t signal_length = BUFFER_SIZE;
+}
+

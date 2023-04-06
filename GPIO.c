@@ -54,7 +54,8 @@ void GPIO_config(void)
 		   /* Init output LED GPIO. */
 		GPIO_PinInit(GPIOB, bit_22, &led_config);
 
-		NVIC_EnableIRQ(IRQHandler_portC_portA);
+		NVIC_EnableIRQ(PORTA_IRQn);
+		NVIC_EnableIRQ(PORTC_IRQn);
 }
 
 void GPIO_callbck(gpio_call_back_t callback ){
@@ -62,20 +63,45 @@ void GPIO_callbck(gpio_call_back_t callback ){
 
 }
 
-void IRQHandler_portC_portA(void){
+void IRQHandler_PORTA(void){
 	uint32_t triggered_pin = 0;
-
-	if(PORT_GetPinsInterruptFlags(PORTA)& (1U << 4U)){
-		PORT_ClearPinsInterruptFlags(PORTA, 1U<<4U);
-		triggered_pin =4;
-	}
-
-	if(PORT_GetPinsInterruptFlags(PORTC)& (bit_1<<bit_6)){
-		PORT_ClearPinsInterruptFlags(PORTC, bit_1<<bit_6);
-		triggered_pin = 6;
+	if(PORT_GetPinsInterruptFlags(PORTA) & ( 1U << 4U)){
+		PORT_ClearPinsInterruptFlags(PORTA, 1U << 4U);
+		triggered_pin = 4;
 	}
 	if(s_gpio_callback && triggered_pin){
-		s_gpio_callback(triggered_pin);
+		s_gpio_callback(PORTA, triggered_pin);
 	}
 
 }
+
+
+void IRQHandler_PORTC(void){
+	uint32_t triggered_pin = 0;
+
+	if(PORT_GetPinsInterruptFlags(PORTC)& (bit_1<<bit_6)){
+		PORT_ClearPinsInterruptFlags(PORTC, bit_1<<bit_6);
+		triggered_pin = bit_6;
+	}
+	if(s_gpio_callback && triggered_pin){
+		s_gpio_callback(PORTC, triggered_pin);
+	}
+
+}/*
+volatile bool sw2_push = true;
+volatile bool sw3_push = true;
+
+void switch_callback(PORT_Type *base, uint32_t pin){
+	static uint8_t signal_type=0;
+	static uint8_t freq_index =0;
+
+	if(base == PORTA && pin == 4){
+		//Cambiar la frecuencia
+		Signal_NexFreq();
+	}
+	else if (base == PORTC && pin 6){
+		//Cambiar señal
+		Signal_NexType();
+	}
+
+}*/

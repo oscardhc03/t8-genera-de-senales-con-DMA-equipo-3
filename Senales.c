@@ -107,7 +107,7 @@ uint16_t *Signals_GetActiveSignalBuffer(void){
 		case SIGNAL_SAWTOOTH:
 			return sawtooth_wave;
 		default:
-			return NULL;
+			return 0;
 	}
 
 }

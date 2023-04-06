@@ -16,13 +16,13 @@ void PIT_init(uint32_t period){
 
 	PIT_GetDefaultConfig(&pitConfig);
 
-	PIT_init(PIT, &pitConfig);
+	PIT_Init(PIT, &pitConfig);
 
 	PIT_SetTimerPeriod(PIT, kPIT_Chnl_0, USEC_TO_COUNT(period, CLOCK_GetFreq(kCLOCK_BusClk)));
 
 	PIT_EnableInterrupts(PIT, kPIT_Chnl_0, kPIT_TimerInterruptEnable);
 
-	NVIC_SetPriority(PIT0_IRQn, 1);
+	NVIC_SetPriority(PIT0_IRQn, 5);
 
 	EnableIRQ(PIT0_IRQn);
 

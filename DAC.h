@@ -9,7 +9,8 @@
 #define DAC_H_
 
 #include "fsl_dac.h"
-
+#include "Senales.h"
+#include "GPIO.h"
 
 void DAC_init(void);
 void DAC_Set(uint32_t val);

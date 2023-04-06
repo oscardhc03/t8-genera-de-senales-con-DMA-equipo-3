@@ -9,6 +9,7 @@
 #define SENALES_H_
 #include "stdint.h"
 #include "bits.h"
+#include "GPIO.h"
 
 #define BUFFER_SIZE 256
 #define DEFAULT_FREQ 500000
@@ -26,7 +27,6 @@ typedef enum{
 
 typedef float myfloat;
 
-void Signal_init(void);
 void Signal_NexType(void);
 void Signal_NexFreq(void);
 

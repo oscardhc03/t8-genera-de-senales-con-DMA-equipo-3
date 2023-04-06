@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include "MK64F12.h"
+#include "GPIO.h"
 
 #define NVIC_global_enable_interrupts __enable_irq()
 #define NVIC_disable_interrupts __disable_irq()
