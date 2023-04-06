@@ -19,6 +19,7 @@ int main(void){
 	GPIO_config();
 	DAC_init();
 	DMA_init();
+	EnableIRQ(PIT0_IRQn);
 
 	//Config señal inicial y freq inicial
 	Signal_NexType();

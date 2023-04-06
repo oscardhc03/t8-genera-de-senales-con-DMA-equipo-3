@@ -11,8 +11,10 @@
 #include "fsl_pit.h"
 #include "NVIC.h"
 #include "GPIO.h"
+#include "DMA.h"
+#include "Senales.h"
 
-static void PIT0_IRQHandler(void);
+void  PIT0_IRQHandler(void);
 
 void PIT_init(uint32_t period);
 #endif /* PIT_H_ */

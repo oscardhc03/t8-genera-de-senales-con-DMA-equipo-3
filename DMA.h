@@ -15,7 +15,7 @@
 #include "GPIO.h"
 
 #define DMA_CHANNEL 0
-#define DMA_SOURCE 63 //source del eDMA para el PIT
+//#define DMA_SOURCE  //source del eDMA para el PIT
 
 //typedef enum  {false_, true_};
 

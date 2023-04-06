@@ -7,8 +7,9 @@
 
 #include "PIT.h"
 
-static void PIT0_IRQHandler(void){
+void PIT0_IRQHandler(void){
 	PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, kPIT_TimerFlag);
+	DMA_StartTransfer();
 }
 void PIT_init(uint32_t period){
 
